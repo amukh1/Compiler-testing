@@ -1,6 +1,6 @@
-g++ index.cpp LLVMController.cpp -o index `llvm-config --cflags --libs`
+g++ *.cpp -o index `llvm-config --cflags --libs`
 
-./index
+./index test.lang
 
 lli output.ll
 

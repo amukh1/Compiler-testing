@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "*.excalidraw": "json",
+        "*.excalidrawlib": "json",
+        "*html": "html",
+        "*.axs": "axtionscript",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "*.cppx": "cpp",
+        "string": "cpp"
+    }
+}

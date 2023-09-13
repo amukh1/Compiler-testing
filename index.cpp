@@ -1,6 +1,7 @@
+#include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
-#include <map>
 
 #include <llvm/IR/LLVMContext.h>
 #include <llvm/IR/Module.h>
@@ -12,10 +13,42 @@
 #include <iostream>
 
 #include "./LLVMController.h"
+#include "./lexer.h"
+#include "./parser.h"
 
 // using namespace llvm;
 
-int main() {
+int main(int argc, char *argv[]) {
+   string file = argv[1];
+   fstream f(file);
+   string program;
+   while (!f.eof()) {
+    string line;
+    getline(f, line);
+    program += line + "\n";
+  }
+  f.close();
+
+  Lexer lexer = Lexer(program);
+  lexer.tokenify();
+
+  // Parsing
+  Parser parser;
+  parser.parse(lexer.tokens, "Statement");
+  cout << parser.AST.size() << endl;
+
+  fstream out("out.json", ios::out);
+
+  out << "[";
+  for (int i = 0; i < parser.AST.size(); i++) {
+    out << parser.AST[i]->JSON();
+    if (i != parser.AST.size() - 1) {
+      out << ",";
+    }
+  }
+  out << "]";
+
+  out.close();
 
  /* llvm::LLVMContext ctx;
 
@@ -84,7 +117,7 @@ int main() {
  Controller.builder->CreateRet(Controller.builder->CreateIntCast(Controller.builder->getInt32(0), Controller.builder->getInt32Ty(), false));
 
 // out
- llvm::outs() << *Controller.module << '\n';
+//  llvm::outs() << *Controller.module << '\n';
  // dump code into file
     std::error_code ec;
     llvm::raw_fd_ostream os("output.ll", ec);

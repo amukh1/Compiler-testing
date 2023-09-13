@@ -1,0 +1,5 @@
+int x;
+
+printf(printf(1, 2), printf(3), 4);
+
+4

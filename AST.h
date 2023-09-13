@@ -57,7 +57,7 @@ public:
                 // ~Identifier() = default;
 //   Identifier(const Identifier &) = default;
 //   ~Identifier() = default;
-
+  bool isTyped;
   vector<string> token;
   string ntype = "IDENTIFIER";
   string JSON();

@@ -143,6 +143,20 @@ void Parser::parse(
 
       this->AST.push_back((shared_ptr<Node>)(move(node)));
       i = j+1;
+    }else if((token[0] == "TYPE" && tokens[i+1][0] == "WORD") || token[0] == "WORD") {
+        if(token[0] == "WORD") {
+          // push identifier
+          shared_ptr<Identifier> node = make_shared<Identifier>();
+          node->token = token;
+          this->AST.push_back((shared_ptr<Node>)(move(node)));
+        } else {
+          // push typed identifier
+          shared_ptr<Identifier> node = make_shared<Identifier>();
+          node->token = token;
+          node->isTyped = true;
+          node->type = tokens[i][1];
+          this->AST.push_back((shared_ptr<Node>)(move(node)));
+        }
     }
     
     else if(token[0] == "COMMA") {

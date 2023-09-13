@@ -113,6 +113,36 @@ void Parser::parse(
       node->params = move(params);
       this->AST.push_back((shared_ptr<Node>)(move(node)));
       i = j+1;
+    }else if(tokens[i][0] == "TYPE" && tokens[i+1][0] == "WORD" && tokens[i+2][0] == "O-PAREN") {
+      shared_ptr<funcDecl> node = make_shared<funcDecl>();
+      shared_ptr<Expression> params = make_shared<Expression>();
+
+      node->name = tokens[i+1][1];
+      int j = i+3;
+      vector<vector<string>> tokenBody;
+
+      int parenCount = 1;
+
+      while (parenCount != 0) {
+        if(tokens[j][0] == "O-PAREN") {
+          parenCount++;
+        }else if(tokens[j][0] == "C-PAREN") {
+          parenCount--;
+        }
+        if(parenCount == 0) {
+          break;
+        }
+        tokenBody.push_back(tokens[j]);
+        j++;
+      }
+
+      Parser par;
+      par.parse(tokenBody, "Expression");
+      params->body = (par.AST);
+      node->params = move(params);
+
+      this->AST.push_back((shared_ptr<Node>)(move(node)));
+      i = j+1;
     }
     
     else if(token[0] == "COMMA") {

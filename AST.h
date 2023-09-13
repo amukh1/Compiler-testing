@@ -6,6 +6,15 @@
 #include <string>
 #include <vector>
 
+#include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/Module.h>
+#include <llvm/IR/IRBuilder.h>
+#include <llvm/IR/Verifier.h>
+#include <llvm/IR/Instructions.h>
+#include <llvm/Support/raw_ostream.h>
+
+#include "LLVMController.h"
+
 using namespace std;
 
 class Node {
@@ -19,7 +28,8 @@ public:
   virtual ~Node() = default;
 //   Node(const Node &) = delete;
   Node(Node &&) = default;
-  virtual void codegen();
+  virtual llvm::Value *codegen(LLVMController* Controller);
+  // virtual void codegen(LLVMController* Controller);
 //   Node(const Node &) = default;
 };
 
@@ -29,7 +39,7 @@ public:
   // ~Literal() = default;
   string ntype = "LITERAL";
   string JSON();
-
+  llvm::Value *codegen(LLVMController* Controller); 
 };
 
 class Expression : public Node {
@@ -38,6 +48,7 @@ public:
   string ntype = "EXPRESSION";
   vector<shared_ptr<Node>> body;
  string JSON();
+ llvm::Value *codegen(LLVMController* Controller);
 };
 
 class Identifier : public Node {
@@ -50,6 +61,7 @@ public:
   vector<string> token;
   string ntype = "IDENTIFIER";
   string JSON();
+  llvm::Value *codegen(LLVMController* Controller);
 };
 
 class variableDeclaration : public Node {
@@ -60,6 +72,7 @@ public:
   bool isDefined;
   shared_ptr<Expression> body;
   string JSON();
+  llvm::Value *codegen(LLVMController* Controller);
 };
 
 class funcCall : public Node {
@@ -69,6 +82,7 @@ class funcCall : public Node {
   string name;
   shared_ptr<Expression> params;
   string JSON();
+  llvm::Value *codegen(LLVMController* Controller);
 };
 
 class seperator : public Node {
@@ -76,4 +90,16 @@ class seperator : public Node {
   seperator() = default;
   string ntype = "SEPERATOR";
   string JSON();
+  llvm::Value *codegen(LLVMController* Controller);
+};
+
+class funcDecl : public Node {
+  public:
+  funcDecl() = default;
+  string ntype = "FUNCDECL";
+  string name;
+  shared_ptr<Expression> params;
+  shared_ptr<Expression> body;
+  string JSON();
+  llvm::Value *codegen(LLVMController* Controller);
 };

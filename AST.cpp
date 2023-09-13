@@ -4,7 +4,15 @@
 #include <string>
 #include <vector>
 
+#include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/Module.h>
+#include <llvm/IR/IRBuilder.h>
+#include <llvm/IR/Verifier.h>
+#include <llvm/IR/Instructions.h>
+#include <llvm/Support/raw_ostream.h>
+
 #include "AST.h"
+#include "LLVMController.h"
 
 using namespace std;
 
@@ -21,6 +29,7 @@ using namespace std;
 // Node::Node(Node &&) {}
 
 string Node::JSON() { return "IN PROGRESS"; }
+llvm::Value *Node::codegen(LLVMController* Controller) { return nullptr; }
 
 // Node::Node(string type, string value, vector<shared_ptr<Node>> children) {
 //     this->type = type;
@@ -76,6 +85,11 @@ string funcCall::JSON() {
 
 string seperator::JSON() {
   string json = "{\"ntype\":\"" + this->ntype + "\"}";
+  return json;
+}
+
+string funcDecl::JSON() {
+  string json = "3";
   return json;
 }
 

@@ -89,8 +89,8 @@ string seperator::JSON() {
 }
 
 string funcDecl::JSON() {
-  // string json = "{\"ntype\":\"" + this->ntype + "\",\"name\":\"" + this->name + "\",\"params\":" + this->params->JSON() + "}";
-  return "5";
+  string json = "{\"ntype\":\"" + this->ntype + "\",\"name\":\"" + this->name + "\",\"params\":" + this->params->JSON() + "}";
+  return json;
 }
 
 

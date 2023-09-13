@@ -1,1 +1,1 @@
-[5]
+[{"ntype":"FUNCDECL","name":"main","params":{"type":"EXPRESSION","body":[{"type":"LITERAL","vtype":"NUMBER","value":"4"}]}}]

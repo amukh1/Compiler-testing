@@ -7,6 +7,7 @@
         "vector": "cpp",
         "iosfwd": "cpp",
         "*.cppx": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "iostream": "cpp"
     }
 }

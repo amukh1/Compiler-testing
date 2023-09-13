@@ -142,7 +142,7 @@ void Parser::parse(
       node->params = move(params);
 
       this->AST.push_back((shared_ptr<Node>)(move(node)));
-      i = j+1;
+      i = j;
     }
     
     else if(token[0] == "COMMA") {

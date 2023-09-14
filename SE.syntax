@@ -1,0 +1,8 @@
+(declare i32 printf (i8*, ...))
+(declare i32 main)
+
+(define i32 main (
+    (var i32 x)
+    (var i32 x (6))
+    (printf (x))
+))
